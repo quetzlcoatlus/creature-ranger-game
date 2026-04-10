@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://csf2aytfqg2xl"]
+
+[ext_resource type="Texture2D" uid="uid://d3yins5kt1rol" path="res://snivy.png" id="1_4cddb"]
+
+[node name="Node2D" type="Node2D" unique_id=1056454504]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1278979278]
+position = Vector2(118, 74)
+texture = ExtResource("1_4cddb")
