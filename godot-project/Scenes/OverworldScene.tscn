@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cpb5qr8ehx84"]
+
+[ext_resource type="Texture2D" uid="uid://dwdpq1uotck64" path="res://ImageAssets/if-this-is-supposed-to-represent-toby-fox-then-why-is-it-a-v0-v6ytcdzmstnf1.webp" id="1_w6a5g"]
+
+[node name="OverworldScene" type="Node2D" unique_id=607922692]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1754995396]
+position = Vector2(-12, -18)
+texture = ExtResource("1_w6a5g")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1040222147]
