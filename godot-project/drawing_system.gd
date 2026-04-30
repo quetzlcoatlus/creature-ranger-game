@@ -5,8 +5,6 @@ signal line_broke
 signal player_damaged(amount: int)
 
 const MAX_LINE_LENGTH := 1200.0
-const CLOSE_THRESHOLD := 24.0
-const MIN_POINTS_FOR_LOOP := 6
 
 @onready var capture_line: Line2D = $CaptureLine
 @onready var line_break_effect: CPUParticles2D = $LineBreakEffect
@@ -24,7 +22,7 @@ func _input(event: InputEvent) -> void:
 		if event.pressed:
 			_start_drawing(get_global_mouse_position())
 		else:
-			_try_close_loop()
+			_clear_line()
 
 
 func _process(_delta: float) -> void:
@@ -41,6 +39,16 @@ func _process(_delta: float) -> void:
 	if line_length + segment_len > MAX_LINE_LENGTH:
 		_break_line()
 		return
+
+	# Check if the new segment crosses any earlier segment in the line.
+	# Skip the last 2 recorded segments to avoid false positives near the cursor.
+	for i in range(0, points.size() - 3):
+		var intersection: Variant = Geometry2D.segment_intersects_segment(
+			last, mouse_pos, points[i], points[i + 1]
+		)
+		if intersection != null:
+			_close_loop_at(intersection, i)
+			return
 
 	if creature_layer:
 		for creature in creature_layer.get_children():
@@ -67,22 +75,31 @@ func _start_drawing(pos: Vector2) -> void:
 	capture_line.points = points
 
 
-func _try_close_loop() -> void:
-	if points.size() >= MIN_POINTS_FOR_LOOP:
-		var start := points[0]
-		var end := points[-1]
-		if start.distance_to(end) <= CLOSE_THRESHOLD:
-			_test_enclosure()
-	_clear_line()
+# Called when the current segment crosses an earlier segment at [intersection],
+# which lies on the segment between points[segment_index] and points[segment_index+1].
+# Closes the loop formed by points[0..segment_index] + intersection, tests enclosure,
+# then restarts drawing fresh from the intersection point.
+func _close_loop_at(intersection: Vector2, segment_index: int) -> void:
+	var loop_polygon := PackedVector2Array()
+	for i in range(segment_index + 1):
+		loop_polygon.append(points[i])
+	loop_polygon.append(intersection)
+
+	_test_enclosure(loop_polygon)
+
+	# Trim to the loop polygon — discard the tail, restart length tracking from the crossing point
+	points = loop_polygon
+	line_length = 0.0
+	capture_line.points = points
 
 
-func _test_enclosure() -> void:
-	if not creature_layer:
+func _test_enclosure(polygon: PackedVector2Array) -> void:
+	if not creature_layer or polygon.size() < 3:
 		return
 	for creature in creature_layer.get_children():
 		if not is_instance_valid(creature):
 			continue
-		if Geometry2D.is_point_in_polygon(creature.global_position, points):
+		if Geometry2D.is_point_in_polygon(creature.global_position, polygon):
 			emit_signal("loop_completed", creature)
 
 
@@ -113,7 +130,7 @@ func _segment_hits_area(seg_start: Vector2, seg_end: Vector2, area: Area2D) -> b
 	if shape is CircleShape2D:
 		var center := shape_node.global_transform.origin
 		var closest := Geometry2D.get_closest_point_to_segment(center, seg_start, seg_end)
-		return closest.distance_to(center) <= shape.radius
+		return closest.distance_to(center) <= (shape as CircleShape2D).radius
 
 	if shape is RectangleShape2D:
 		var half := (shape as RectangleShape2D).size / 2.0
