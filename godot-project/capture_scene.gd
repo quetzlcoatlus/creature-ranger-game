@@ -31,6 +31,14 @@ func _ready() -> void:
 		creature.scene_bounds = bounds
 		creature.captured.connect(_on_creature_captured.bind(creature))
 
+	var boundary_rect := $Background/BoundaryRect as ColorRect
+	var window := get_tree().root
+	window.content_scale_size = Vector2i(boundary_rect.get_rect().size)
+	window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
+	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	RenderingServer.set_default_clear_color(boundary_rect.color)
+
 	_update_hp_display()
 	_update_loop_display()
 
