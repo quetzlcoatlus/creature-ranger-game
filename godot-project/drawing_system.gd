@@ -77,18 +77,25 @@ func _start_drawing(pos: Vector2) -> void:
 
 # Called when the current segment crosses an earlier segment at [intersection],
 # which lies on the segment between points[segment_index] and points[segment_index+1].
-# Closes the loop formed by points[0..segment_index] + intersection, tests enclosure,
-# then restarts drawing fresh from the intersection point.
+#
+# The enclosed loop is the TAIL: intersection → points[segment_index+1..n-1] → (back to intersection).
+# The HEAD (points[0..segment_index] + intersection) is what stays visible and continues drawing.
 func _close_loop_at(intersection: Vector2, segment_index: int) -> void:
+	# Build the loop polygon from the tail of the path
 	var loop_polygon := PackedVector2Array()
-	for i in range(segment_index + 1):
-		loop_polygon.append(points[i])
 	loop_polygon.append(intersection)
+	for i in range(segment_index + 1, points.size()):
+		loop_polygon.append(points[i])
 
 	_test_enclosure(loop_polygon)
 
-	# Trim to the loop polygon — discard the tail, restart length tracking from the crossing point
-	points = loop_polygon
+	# Keep the head as the new visible line; discard the tail
+	var new_points := PackedVector2Array()
+	for i in range(segment_index + 1):
+		new_points.append(points[i])
+	new_points.append(intersection)
+
+	points = new_points
 	line_length = 0.0
 	capture_line.points = points
 
