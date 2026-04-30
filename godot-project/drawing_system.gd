@@ -29,6 +29,17 @@ func _process(_delta: float) -> void:
 	if not is_drawing or points.is_empty():
 		return
 
+	# Check all existing segments every frame so creatures walking into the line break it
+	if creature_layer and points.size() > 1:
+		for creature in creature_layer.get_children():
+			if not is_instance_valid(creature):
+				continue
+			var capture_hitbox: Area2D = creature.get_node("CaptureHitbox")
+			for i in range(points.size() - 1):
+				if _segment_hits_area(points[i], points[i + 1], capture_hitbox):
+					_break_line()
+					return
+
 	var mouse_pos := get_global_mouse_position()
 	var last := points[-1]
 	var segment_len := last.distance_to(mouse_pos)
