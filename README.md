@@ -7,20 +7,20 @@ A short top-down creature capture prototype inspired heavily by Pokemon Ranger, 
 ## Core Gameplay Loop
 
 1. Player explores overworld 
-    a. NPCs and environment
+    - NPCs and environment
 2. Player encounters creature 
-    a. Upon seeing the player they might be aggressive, docile, or afraid
+    - Upon seeing the player they might be aggressive, docile, or afraid
 3. Player walks into creature to enter capture scene
-    a. Player hitbox collides with theirs
+    - Player hitbox collides with theirs
 4. Perform capture interaction
-    a. Drawing loops, taking damage, run away
+    - Drawing loops, taking damage, run away
 5. Success or failure
-    a. Success: draw enough loops to capture/run away
-    b. Failure: run out of HP
+    - Success: draw enough loops to capture/run away
+    - Failure: run out of HP
 6. Return to overworld with state change
-    a. New creature in party
-    b. Run away nothing happens and the creature is frozen temporarily
-    c. Run out of HP then return to main menu/last save
+    - New creature in party
+    - Run away nothing happens and the creature is frozen temporarily
+    - Run out of HP then return to main menu/last save
 
 ## Player Actions
 
