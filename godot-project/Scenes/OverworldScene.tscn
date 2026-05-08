@@ -1,11 +1,396 @@
-[gd_scene format=3 uid="uid://cpb5qr8ehx84"]
+[gd_scene format=4 uid="uid://cpb5qr8ehx84"]
 
+[ext_resource type="Texture2D" uid="uid://64ogpfg6vr8h" path="res://ImageAssets/Terrain/Grass_IsometricTiles001.png" id="1_t45k3"]
 [ext_resource type="Texture2D" uid="uid://dwdpq1uotck64" path="res://ImageAssets/if-this-is-supposed-to-represent-toby-fox-then-why-is-it-a-v0-v6ytcdzmstnf1.webp" id="1_w6a5g"]
+[ext_resource type="Script" uid="uid://bxoo74k07dhty" path="res://Scripts/Tilemap/TileMapBorderCollision.gd" id="2_8el3g"]
+[ext_resource type="Script" uid="uid://cffykk4prk5kr" path="res://Scripts/Creatures/Player.gd" id="2_mwt4o"]
+[ext_resource type="Texture2D" uid="uid://jlcskebmtuhg" path="res://ImageAssets/Terrain/Sand_IsometricTiles002.png" id="3_6p30c"]
+[ext_resource type="Script" uid="uid://t11bilxckjq0" path="res://Scripts/World/GameEnvironment.gd" id="3_genv"]
+[ext_resource type="Texture2D" uid="uid://dnk5b52bitasq" path="res://ImageAssets/Terrain/Ice_IsometricTiles003.png" id="4_ugdhw"]
+[ext_resource type="Texture2D" uid="uid://dptnovanhsfbw" path="res://ImageAssets/Creatures/abomination001.png" id="5_abom1"]
+[ext_resource type="Texture2D" uid="uid://gaclnp28uqjc" path="res://ImageAssets/Terrain/basic_tree_noTrunk.png" id="5_cjnpj"]
+[ext_resource type="Script" uid="uid://cxabom1nati0n" path="res://Scripts/Creatures/Abomination.gd" id="6_abom2"]
+[ext_resource type="Script" uid="uid://bgoalaictrl1" path="res://Scripts/AI/GoalAI.gd" id="7_goal1"]
+[ext_resource type="Script" path="res://Scripts/Creatures/ShadowSprite2D.gd" id="8_shad1"]
+[ext_resource type="Script" uid="uid://bgoalwand001" path="res://Scripts/AI/Goals/GoalWander.gd" id="9_gwnd1"]
+[ext_resource type="Script" uid="uid://bgoalsafe001" path="res://Scripts/AI/Goals/GoalSafety.gd" id="10_gsaf"]
+[ext_resource type="Script" uid="uid://bgoalslep001" path="res://Scripts/AI/Goals/GoalSleep.gd" id="11_gslp"]
+[ext_resource type="Script" uid="uid://bgoalplay001" path="res://Scripts/AI/Goals/GoalPlay.gd" id="12_gpla"]
+[ext_resource type="Script" uid="uid://brtfg600fy671" path="res://Scripts/Tilemap/TreeLayerController.gd" id="13_tlc1"]
+[ext_resource type="Script" uid="uid://dx71h27r7s1ix" path="res://Scripts/AI/Goals/GoalExploreTrees.gd" id="14_gxtr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8el3g"]
+texture = ExtResource("1_t45k3")
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -2)
+0:0/0/custom_data_4 = 1
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, -2)
+1:0/0/custom_data_4 = 1
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, -2)
+2:0/0/custom_data_4 = 1
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, -2)
+3:0/0/custom_data_4 = 1
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ugdhw"]
+texture = ExtResource("3_6p30c")
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -2)
+0:0/0/custom_data_0 = 0.5
+0:0/0/custom_data_1 = 0.7
+0:0/0/custom_data_4 = 2
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, -2)
+1:0/0/custom_data_0 = 0.5
+1:0/0/custom_data_1 = 0.7
+1:0/0/custom_data_4 = 2
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, -2)
+2:0/0/custom_data_0 = 0.5
+2:0/0/custom_data_1 = 0.7
+2:0/0/custom_data_4 = 2
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, -2)
+3:0/0/custom_data_0 = 0.5
+3:0/0/custom_data_1 = 0.7
+3:0/0/custom_data_4 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ja1ct"]
+texture = ExtResource("4_ugdhw")
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -2)
+0:0/0/custom_data_0 = 1.4
+0:0/0/custom_data_1 = 0.85
+0:0/0/custom_data_2 = 0.08
+0:0/0/custom_data_3 = 0.2
+0:0/0/custom_data_4 = 3
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, -2)
+1:0/0/custom_data_0 = 1.4
+1:0/0/custom_data_1 = 0.85
+1:0/0/custom_data_2 = 0.08
+1:0/0/custom_data_3 = 0.2
+1:0/0/custom_data_4 = 3
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, -2)
+2:0/0/custom_data_0 = 1.4
+2:0/0/custom_data_1 = 0.85
+2:0/0/custom_data_2 = 0.08
+2:0/0/custom_data_3 = 0.2
+2:0/0/custom_data_4 = 3
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, -2)
+3:0/0/custom_data_0 = 1.4
+3:0/0/custom_data_1 = 0.85
+3:0/0/custom_data_2 = 0.08
+3:0/0/custom_data_3 = 0.2
+3:0/0/custom_data_4 = 3
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_es3yh"]
+texture = ExtResource("5_cjnpj")
+texture_region_size = Vector2i(48, 64)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -32)
+0:0/0/custom_data_4 = 5
+
+[sub_resource type="TileSet" id="TileSet_6p30c"]
+tile_shape = 1
+tile_size = Vector2i(16, 8)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "speed_mod"
+custom_data_layer_0/type = 3
+custom_data_layer_1/name = "jump_mod"
+custom_data_layer_1/type = 3
+custom_data_layer_2/name = "friction_mod"
+custom_data_layer_2/type = 3
+custom_data_layer_3/name = "turn_mod"
+custom_data_layer_3/type = 3
+custom_data_layer_4/name = "terrain_tag"
+custom_data_layer_4/type = 2
+sources/0 = SubResource("TileSetAtlasSource_8el3g")
+sources/1 = SubResource("TileSetAtlasSource_ugdhw")
+sources/2 = SubResource("TileSetAtlasSource_ja1ct")
+sources/3 = SubResource("TileSetAtlasSource_es3yh")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ugdhw"]
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_abom1"]
+radius = 2.5
 
 [node name="OverworldScene" type="Node2D" unique_id=607922692]
+y_sort_enabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1754995396]
-position = Vector2(-12, -18)
+[node name="GameEnvironment" type="Node" parent="." unique_id=1040222149 groups=["game_environment"]]
+script = ExtResource("3_genv")
+seconds_per_minute = 40.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1040222148 groups=["world_canvas_modulate"]]
+
+[node name="BasicTilemapLayer" type="TileMapLayer" parent="." unique_id=1623358685]
+z_index = -1
+y_sort_enabled = true
+texture_filter = 1
+tile_map_data = PackedByteArray("AAD7/yYAAAABAAAAAAD6/ycAAAABAAAAAAD7/ygAAAABAAAAAAD6/ykAAAABAAAAAAD7/yoAAAABAAAAAAD6/ysAAAABAAAAAAD7/ywAAAABAAAAAAD6/y0AAAABAAAAAAD7/y4AAAABAAAAAAD7/y8AAAABAAAAAAD8/y4AAAABAAAAAAD8/y8AAAABAAAAAAD8/zAAAAABAAAAAAD9/zAAAAABAAAAAAD9/y8AAAABAAAAAAD+/y4AAAABAAAAAAD+/y8AAAABAAAAAAD+/y0AAAABAAAAAAD//ywAAAABAAAAAAD//ysAAAABAAAAAAAAACoAAAABAAAAAAAAACkAAAABAAAAAAABACoAAAABAAAAAAABACkAAAABAAAAAAACACoAAAABAAAAAAACACsAAAABAAAAAAADACwAAAABAAAAAAADACsAAAABAAAAAAAEACwAAAABAAAAAAAEACsAAAABAAAAAAAEACoAAAABAAAAAAAEACkAAAABAAAAAAAFACgAAAABAAAAAAAFACcAAAABAAAAAAAFACUAAAACAAAAAAAGACUAAAABAAAAAAAFACQAAAABAAAAAAAEACUAAAABAAAAAAAGACQAAAABAAAAAAAFACMAAAABAAAAAAAEACYAAAABAAAAAAADACcAAAABAAAAAAADACgAAAABAAAAAAACACcAAAAAAAAAAAADACYAAAABAAAAAAADACQAAAADAAAAAAACACUAAAADAAAAAAACACQAAAABAAAAAAADACIAAAABAAAAAAACACMAAAABAAAAAAABACUAAAABAAAAAAABACYAAAABAAAAAAACACwAAAABAAAAAAACAC0AAAABAAAAAAACAC4AAAABAAAAAAACAC8AAAABAAAAAAADAC0AAAABAAAAAAAEAC4AAAABAAAAAAAEAC0AAAABAAAAAAAFACwAAAABAAAAAAAFACsAAAABAAAAAAAFACoAAAABAAAAAAAFACkAAAABAAAAAAAGACgAAAABAAAAAAAGACcAAAACAAAAAAAHACYAAAABAAAAAAAHACUAAAAAAAAAAAAHACQAAAAAAAAAAAAGACMAAAAAAAAAAAAGACIAAAAAAAAAAAAFACEAAAAAAAAAAAAFACIAAAAAAAAAAAAEACEAAAAAAAAAAAAEACIAAAAAAAAAAAADACMAAAAAAAAAAAAGACkAAAABAAAAAAAGACoAAAABAAAAAAAGACYAAAACAAAAAAD8/yMAAAABAAAAAAD9/yQAAAABAAAAAAD9/yIAAAABAAAAAAD9/yMAAAABAAAAAAD8/yUAAAABAAAAAAD9/yYAAAABAAAAAAD9/ycAAAABAAAAAAD+/yYAAAABAAAAAAD9/yUAAAABAAAAAAD+/yQAAAABAAAAAAD+/yMAAAABAAAAAAD+/yIAAAABAAAAAAD//x4AAAABAAAAAAD//x8AAAABAAAAAAAAACAAAAABAAAAAAD//x0AAAABAAAAAAAAAB4AAAABAAAAAAD//xwAAAABAAAAAAD//xsAAAABAAAAAAAAABwAAAABAAAAAAD//yAAAAACAAAAAAD+/x8AAAACAAAAAAAAABgAAAACAAAAAAAAABkAAAACAAAAAAAAABcAAAABAAAAAAABABgAAAABAAAAAAABABkAAAABAAAAAAACABoAAAABAAAAAAACABsAAAABAAAAAAABABYAAAABAAAAAAABABcAAAABAAAAAAACABgAAAABAAAAAAACABkAAAABAAAAAAADABoAAAABAAAAAAABABUAAAABAAAAAAACABYAAAABAAAAAAACABcAAAABAAAAAAADABgAAAABAAAAAAADABkAAAABAAAAAAAEAB0AAAABAAAAAAAFABwAAAABAAAAAAAFABsAAAABAAAAAAAGABoAAAABAAAAAAAGABkAAAABAAAAAAAGABgAAAABAAAAAAAFABcAAAABAAAAAAAHABoAAAABAAAAAAAGABsAAAABAAAAAAAGABwAAAABAAAAAAAHABwAAAABAAAAAAAHABsAAAABAAAAAAAIABoAAAABAAAAAAAHABkAAAABAAAAAAAHABgAAAABAAAAAAAGABcAAAABAAAAAAAHAB0AAAABAAAAAAAIABwAAAABAAAAAAAIABsAAAABAAAAAAAIABkAAAABAAAAAAAIABgAAAABAAAAAAAIABcAAAABAAAAAAAIABYAAAABAAAAAAAHABcAAAABAAAAAAAHABYAAAABAAAAAAD7/x4AAAABAAAAAAD6/x0AAAABAAAAAAD6/x4AAAABAAAAAAD6/xwAAAABAAAAAAD6/xsAAAABAAAAAAD6/xoAAAABAAAAAAD6/xkAAAABAAAAAAD7/xgAAAABAAAAAAD7/xkAAAABAAAAAAD7/xoAAAABAAAAAAD7/xsAAAABAAAAAAD7/xwAAAABAAAAAAD8/xoAAAABAAAAAAD8/xgAAAABAAAAAAD7/xcAAAABAAAAAAD5/x0AAAABAAAAAAD5/x4AAAABAAAAAAD5/xsAAAABAAAAAAD5/xkAAAABAAAAAAD6/xgAAAABAAAAAAD6/ygAAAABAAAAAAD6/yoAAAABAAAAAAD6/ywAAAABAAAAAAD6/y4AAAABAAAAAAD6/y8AAAABAAAAAAD7/zAAAAABAAAAAAD7/zEAAAABAAAAAAD8/zEAAAABAAAAAAD9/zEAAAABAAAAAAD+/zAAAAABAAAAAAD//y4AAAABAAAAAAD//y0AAAABAAAAAAAAACwAAAABAAAAAAAAACsAAAABAAAAAAABACwAAAABAAAAAAABACsAAAABAAAAAAABAC0AAAABAAAAAAABAC4AAAABAAAAAAAAAC0AAAABAAAAAAAAAC4AAAABAAAAAAD//y8AAAABAAAAAAD//zAAAAABAAAAAAD+/zEAAAABAAAAAAD+/zIAAAABAAAAAAD9/zMAAAABAAAAAAD9/zQAAAABAAAAAAD8/zMAAAABAAAAAAD8/zQAAAABAAAAAAD7/zMAAAABAAAAAAD7/zIAAAABAAAAAAD8/zIAAAABAAAAAAD9/zIAAAABAAAAAAD7/zQAAAABAAAAAAD6/zMAAAABAAAAAAD6/zIAAAABAAAAAAD6/zEAAAABAAAAAAD6/zAAAAABAAAAAAD5/y0AAAABAAAAAAD5/ysAAAABAAAAAAD5/yoAAAABAAAAAAD5/ykAAAABAAAAAAD5/ywAAAABAAAAAAD5/y4AAAABAAAAAAD5/y8AAAABAAAAAAD5/zAAAAABAAAAAAD5/zEAAAABAAAAAAD5/zMAAAABAAAAAAD8/zUAAAABAAAAAAD9/zUAAAABAAAAAAD+/zQAAAABAAAAAAD+/zMAAAABAAAAAAD//zIAAAABAAAAAAD//zEAAAABAAAAAAAAADAAAAABAAAAAAAAADEAAAABAAAAAAABADAAAAABAAAAAAAAAC8AAAABAAAAAAABAC8AAAABAAAAAAACADAAAAABAAAAAAADAC4AAAABAAAAAAADAC8AAAABAAAAAAAEAC8AAAABAAAAAAAFAC4AAAABAAAAAAAFAC0AAAABAAAAAAD//zYAAAABAAAAAAD//zUAAAABAAAAAAD//zQAAAABAAAAAAD+/zUAAAABAAAAAAADADYAAAAAAAAAAAD+/yEAAAABAAAAAAD//yIAAAABAAAAAAD//yMAAAABAAAAAAD//yQAAAABAAAAAAD+/yUAAAABAAAAAAD//yEAAAACAAAAAAD4/yYAAAABAAAAAAD3/ycAAAABAAAAAAD3/ygAAAABAAAAAAD2/ykAAAABAAAAAAD3/yoAAAABAAAAAAD2/yoAAAABAAAAAAD2/ysAAAABAAAAAAD2/ygAAAABAAAAAAD2/ycAAAABAAAAAAD3/yYAAAABAAAAAAD2/yUAAAABAAAAAAD3/yQAAAABAAAAAAD2/yYAAAABAAAAAAD2/yQAAAABAAAAAAD2/yMAAAABAAAAAAD2/yIAAAABAAAAAAD2/yEAAAABAAAAAAD1/yMAAAABAAAAAAD1/yQAAAABAAAAAAD1/yIAAAABAAAAAAD1/yEAAAABAAAAAAD1/yUAAAABAAAAAAD1/yYAAAABAAAAAAD1/ycAAAABAAAAAAD0/yUAAAABAAAAAAD1/zAAAAABAAAAAAD0/zEAAAABAAAAAAD1/zIAAAABAAAAAAD1/zMAAAABAAAAAAD2/zIAAAABAAAAAAD1/zEAAAABAAAAAAD2/zAAAAABAAAAAAD2/zEAAAABAAAAAAD2/zMAAAABAAAAAAD3/zIAAAABAAAAAAD3/zMAAAABAAAAAAD3/zQAAAABAAAAAAD4/ygAAAADAAAAAAD4/ycAAAADAAAAAAD4/ysAAAABAAAAAAD5/zcAAQABAAAAAAD6/zgAAQABAAAAAAD6/zkAAQABAAAAAAD6/zoAAQABAAAAAAD5/zsAAQABAAAAAAD5/zkAAQABAAAAAAD5/zgAAQABAAAAAAD4/zkAAQABAAAAAAD5/zoAAQABAAAAAAD7/zoAAQABAAAAAAD6/zsAAQABAAAAAAD7/zwAAQABAAAAAAD6/z0AAQABAAAAAAD6/z4AAQABAAAAAAD5/z0AAQABAAAAAAD5/z4AAQABAAAAAAD5/zwAAQABAAAAAAD6/zwAAQABAAAAAAD4/zsAAQABAAAAAAD4/zwAAQABAAAAAAD4/z0AAQABAAAAAAD7/zsAAQABAAAAAAD7/zkAAQABAAAAAAD8/zgAAQABAAAAAAD7/zgAAQABAAAAAAD6/zcAAQABAAAAAAD6/zYAAQABAAAAAAD6/zUAAQABAAAAAAD6/zQAAQABAAAAAAD7/zYAAQABAAAAAAD7/zUAAQABAAAAAAD7/zcAAQABAAAAAAD8/zYAAQABAAAAAAD8/zcAAQABAAAAAAD9/zYAAQABAAAAAAD9/zcAAQABAAAAAAD9/zgAAQABAAAAAAD+/zYAAQABAAAAAAD8/zkAAQABAAAAAAD8/zoAAQABAAAAAAD+/zgAAQABAAAAAAD+/zkAAQABAAAAAAD//zoAAQABAAAAAAD//zsAAQABAAAAAAAAADwAAQABAAAAAAAAAD0AAQABAAAAAAABAD4AAQABAAAAAAAAAD8AAQABAAAAAAAAAEAAAQABAAAAAAD//z8AAQABAAAAAAAAAD4AAQABAAAAAAD//z0AAQABAAAAAAD//zwAAQABAAAAAAD+/zsAAQABAAAAAAD+/zoAAQABAAAAAAD9/zkAAQABAAAAAAD9/zoAAQABAAAAAAD9/zsAAQABAAAAAAD+/zwAAQABAAAAAAD+/z0AAQABAAAAAAD//z4AAQABAAAAAAD9/zwAAQABAAAAAAD8/zsAAQABAAAAAAD8/zwAAQABAAAAAAD8/z0AAQABAAAAAAD9/z4AAQABAAAAAAD9/z0AAQABAAAAAAD+/z4AAQABAAAAAAD+/z8AAQABAAAAAAD//0AAAQABAAAAAAD//0EAAQABAAAAAAD7/z0AAQABAAAAAAD7/z4AAQABAAAAAAD7/z8AAQABAAAAAAD8/z4AAQABAAAAAAD8/z8AAQABAAAAAAD9/z8AAQABAAAAAAD+/0AAAQABAAAAAAD+/0EAAQABAAAAAAD//0IAAQABAAAAAAD9/0EAAQABAAAAAAD9/0AAAQABAAAAAAD8/0AAAQABAAAAAAD9/0IAAQABAAAAAAD+/0IAAQABAAAAAAD8/0EAAQABAAAAAAD9/0MAAQABAAAAAAD+/0QAAQABAAAAAAD+/0MAAQABAAAAAAAAADkAAQACAAAAAAABADoAAQACAAAAAAABADsAAQACAAAAAAAAADcAAQABAAAAAAABADgAAQABAAAAAAABADkAAQABAAAAAAACADoAAQABAAAAAAACADsAAQABAAAAAAADADwAAQABAAAAAAABADYAAQABAAAAAAABADcAAQABAAAAAAACADgAAQABAAAAAAACADkAAQABAAAAAAADADoAAQABAAAAAAADADsAAQABAAAAAAAEADoAAQABAAAAAAADADkAAQABAAAAAAADADgAAQABAAAAAAACADcAAQABAAAAAAACADYAAQABAAAAAAABADUAAQABAAAAAAADAD0AAQADAAAAAAAEADwAAQADAAAAAAAEADsAAQADAAAAAAAEAEAAAQABAAAAAAAEAD8AAQABAAAAAAAFAD4AAQABAAAAAAAFAEAAAQABAAAAAAAEAEEAAQABAAAAAAAFAD8AAQABAAAAAAAGAEAAAQABAAAAAAAFAEEAAQABAAAAAAAFAEIAAQABAAAAAAAGAEIAAQABAAAAAAAGAEEAAQABAAAAAAAFAEMAAQABAAAAAAAFAEQAAQABAAAAAAAEAEMAAQABAAAAAAAEAEIAAQABAAAAAAADAEEAAQABAAAAAAADAEAAAQABAAAAAAACAD8AAQABAAAAAAACAD4AAQABAAAAAAABAD8AAQABAAAAAAABAEAAAQABAAAAAAACAEAAAQABAAAAAAACAEEAAQABAAAAAAADAEIAAQABAAAAAAADAEMAAQABAAAAAAAEAEQAAQABAAAAAAADAEUAAQABAAAAAAAEAEYAAQABAAAAAAAEAEUAAQABAAAAAAADAEQAAQABAAAAAAACAEMAAQABAAAAAAACAEQAAQABAAAAAAACAEIAAQABAAAAAAABAEEAAQABAAAAAAABAEIAAQABAAAAAAAAAEEAAQABAAAAAAABAEMAAQABAAAAAAACAEUAAQABAAAAAAADAEYAAQABAAAAAAADAEcAAQABAAAAAAD3/z0AAgABAAAAAAD4/z4AAgABAAAAAAD4/z8AAgABAAAAAAD5/0AAAgABAAAAAAD5/z8AAgABAAAAAAD6/0AAAgABAAAAAAD5/0EAAgABAAAAAAD6/z8AAgABAAAAAAD7/0AAAgABAAAAAAD6/0EAAgABAAAAAAD6/0IAAgABAAAAAAD5/0MAAgABAAAAAAD5/0IAAgABAAAAAAD4/0EAAgABAAAAAAD4/0AAAgABAAAAAAD3/z8AAgABAAAAAAD3/z4AAgABAAAAAAD2/z0AAgABAAAAAAD3/zwAAgABAAAAAAD2/zsAAgABAAAAAAD3/zoAAgABAAAAAAD3/zsAAgABAAAAAAD4/zoAAgABAAAAAAD3/zkAAgABAAAAAAD4/zgAAgABAAAAAAD4/zcAAgABAAAAAAD4/zYAAgABAAAAAAD5/zYAAgABAAAAAAD4/zUAAgABAAAAAAD5/zUAAgABAAAAAAD5/zQAAgABAAAAAAD4/zMAAgABAAAAAAD5/zIAAgABAAAAAAD4/zQAAgABAAAAAAD3/zUAAgABAAAAAAD3/zYAAgABAAAAAAD2/zcAAgABAAAAAAD2/zUAAgABAAAAAAD2/zQAAgABAAAAAAD1/zUAAgABAAAAAAD2/zYAAgABAAAAAAD1/zcAAgABAAAAAAD1/zgAAgABAAAAAAD1/zkAAgABAAAAAAD2/zgAAgABAAAAAAD3/zcAAgABAAAAAAD3/zgAAgABAAAAAAD2/zwAAgABAAAAAAD1/z0AAgABAAAAAAD2/zoAAgABAAAAAAD2/zkAAgABAAAAAAD1/zsAAgABAAAAAAD2/z4AAgABAAAAAAD2/z8AAgABAAAAAAD3/0AAAgABAAAAAAD3/0EAAgABAAAAAAD4/0IAAgABAAAAAAD4/0MAAgABAAAAAAD5/0QAAgABAAAAAAD1/z4AAgACAAAAAAD1/z8AAgACAAAAAAD2/0AAAgACAAAAAAD2/0EAAgACAAAAAAD3/0IAAgACAAAAAAD3/0MAAgACAAAAAAD4/0QAAgACAAAAAAD4/0UAAgACAAAAAAD6/0MAAgADAAAAAAD6/0QAAgADAAAAAAD5/0UAAgADAAAAAAD0/0EAAgABAAAAAAD1/0IAAgABAAAAAAD1/0MAAgABAAAAAAD2/0QAAgABAAAAAAD2/0UAAgABAAAAAAD3/0YAAgABAAAAAAD3/0cAAgABAAAAAAD4/0gAAgABAAAAAAD4/0kAAgABAAAAAAD5/0gAAgABAAAAAAD5/0kAAgABAAAAAAD6/0gAAgABAAAAAAD6/0cAAgABAAAAAAD7/0YAAgABAAAAAAD5/0oAAgABAAAAAAD0/0AAAgABAAAAAAD4/0oAAgABAAAAAAD3/0kAAgABAAAAAAD3/0gAAgABAAAAAAD2/0cAAgABAAAAAAD2/0YAAgABAAAAAAD1/0UAAgABAAAAAAD1/0QAAgABAAAAAAD0/0MAAgABAAAAAAD0/0IAAgABAAAAAADz/0EAAgABAAAAAAD4/0sAAgABAAAAAAD5/0wAAgABAAAAAAD5/0sAAgABAAAAAAD6/0oAAgABAAAAAAD6/0kAAgABAAAAAAD7/0gAAgABAAAAAAD7/0cAAgABAAAAAAD5/yQAAQABAAAAAAD5/yMAAQABAAAAAAD5/yUAAgABAAAAAAD6/yQAAgABAAAAAAD6/yYAAAADAAAAAAD6/yUAAAADAAAAAAD8/ywAAAABAAAAAAD8/y0AAAABAAAAAAD9/y4AAAABAAAAAAD9/ywAAAABAAAAAAD9/y0AAAABAAAAAAD9/ysAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_6p30c")
+script = ExtResource("2_8el3g")
+
+[node name="ObjectLayer" type="TileMapLayer" parent="." unique_id=2000000001 groups=["object_layer"]]
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(-32, 21)
+tile_map_data = PackedByteArray("AAD9/ywAAwAAAAAAAAD//yUAAwAAAAAAAAADABcAAwAAAAAAAAA=")
+tile_set = SubResource("TileSet_6p30c")
+script = ExtResource("13_tlc1")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1270433210 node_paths=PackedStringArray("sprite", "shadow", "landing_shadow", "ground_layer", "collision")]
+position = Vector2(-75, 165)
+motion_mode = 1
+script = ExtResource("2_mwt4o")
+sprite = NodePath("Toby")
+shadow = NodePath("Shadow")
+landing_shadow = NodePath("LandingShadow")
+ground_layer = NodePath("../BasicTilemapLayer")
+collision = NodePath("CollisionShape2D")
+
+[node name="LandingShadow" type="Sprite2D" parent="CharacterBody2D" unique_id=1160704226]
+
+[node name="Toby" type="Sprite2D" parent="CharacterBody2D" unique_id=1754995396]
+position = Vector2(-7.6293945e-06, 0)
+scale = Vector2(0.029411754, 0.028914623)
 texture = ExtResource("1_w6a5g")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1040222147]
+[node name="Shadow" type="Sprite2D" parent="CharacterBody2D" unique_id=1160704225]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=985383622]
+shape = SubResource("CircleShape2D_ugdhw")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1040222147]
+position = Vector2(0, -2)
+zoom = Vector2(5, 5)
+
+[node name="Abomination" type="CharacterBody2D" parent="." unique_id=1111111111 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+position = Vector2(-58, 197)
+motion_mode = 1
+script = ExtResource("6_abom2")
+max_speed = 32.0
+time_to_stop = 0.1
+ground_layer = NodePath("../BasicTilemapLayer")
+footstep_volume_db = -15.0
+collision = NodePath("CollisionShape2D")
+body_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Abomination" unique_id=1111111112]
+texture_filter = 1
+position = Vector2(1.0000006, -1.0000027)
+scale = Vector2(0.50000006, 0.50000024)
+texture = ExtResource("5_abom1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination" unique_id=1111111113]
+shape = SubResource("CircleShape2D_abom1")
+
+[node name="GoalAI" type="Node" parent="Abomination" unique_id=1111111114]
+script = ExtResource("7_goal1")
+
+[node name="GoalWander" type="Node" parent="Abomination/GoalAI" unique_id=1111111120]
+script = ExtResource("9_gwnd1")
+terrain_weights = {
+1: 1.0,
+2: -0.8,
+3: 0.0
+}
+wander_radius = 50.0
+
+[node name="GoalSafety" type="Node" parent="Abomination/GoalAI" unique_id=1111111121]
+script = ExtResource("10_gsaf")
+safe_tags = Array[int]([1])
+safety_timeout = 8.0
+wander_radius = 50.0
+
+[node name="GoalSleep" type="Node" parent="Abomination/GoalAI" unique_id=1111111122]
+script = ExtResource("11_gslp")
+home_tags = Array[int]([1])
+safe_tags = Array[int]([1])
+wander_radius = 50.0
+
+[node name="GoalPlay" type="Node" parent="Abomination/GoalAI" unique_id=1111111123]
+script = ExtResource("12_gpla")
+fun_tags = Array[int]([3])
+
+[node name="GoalExploreTrees" type="Node" parent="Abomination/GoalAI" unique_id=1111111130]
+script = ExtResource("14_gxtr")
+
+[node name="Shadow" type="Sprite2D" parent="Abomination" unique_id=1111111115 node_paths=PackedStringArray("target_sprite", "creature")]
+script = ExtResource("8_shad1")
+target_sprite = NodePath("../Sprite2D")
+creature = NodePath("..")
+
+[node name="Abomination2" type="CharacterBody2D" parent="." unique_id=957119014 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+position = Vector2(-77, 185)
+motion_mode = 1
+script = ExtResource("6_abom2")
+max_speed = 32.0
+time_to_stop = 0.1
+ground_layer = NodePath("../BasicTilemapLayer")
+footstep_volume_db = -15.0
+collision = NodePath("CollisionShape2D")
+body_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Abomination2" unique_id=1406016439]
+texture_filter = 1
+position = Vector2(1.000001, -2.0000029)
+scale = Vector2(0.50000006, 0.50000024)
+texture = ExtResource("5_abom1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination2" unique_id=600480985]
+shape = SubResource("CircleShape2D_abom1")
+
+[node name="GoalAI" type="Node" parent="Abomination2" unique_id=692515721]
+script = ExtResource("7_goal1")
+
+[node name="GoalWander" type="Node" parent="Abomination2/GoalAI" unique_id=1552457476]
+script = ExtResource("9_gwnd1")
+terrain_weights = {
+1: 1.0,
+2: -0.8,
+3: 0.0
+}
+wander_radius = 50.0
+
+[node name="GoalSafety" type="Node" parent="Abomination2/GoalAI" unique_id=1199152985]
+script = ExtResource("10_gsaf")
+safe_tags = Array[int]([1])
+safety_timeout = 8.0
+wander_radius = 50.0
+
+[node name="GoalSleep" type="Node" parent="Abomination2/GoalAI" unique_id=1097561137]
+script = ExtResource("11_gslp")
+home_tags = Array[int]([1])
+safe_tags = Array[int]([1])
+wander_radius = 50.0
+
+[node name="GoalPlay" type="Node" parent="Abomination2/GoalAI" unique_id=1707822380]
+script = ExtResource("12_gpla")
+fun_tags = Array[int]([3])
+
+[node name="GoalExploreTrees" type="Node" parent="Abomination2/GoalAI" unique_id=1707822381]
+script = ExtResource("14_gxtr")
+
+[node name="Shadow" type="Sprite2D" parent="Abomination2" unique_id=740282877 node_paths=PackedStringArray("target_sprite", "creature")]
+script = ExtResource("8_shad1")
+target_sprite = NodePath("../Sprite2D")
+creature = NodePath("..")
+
+[node name="Abomination3" type="CharacterBody2D" parent="." unique_id=-2072745075 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+position = Vector2(-35, 213)
+motion_mode = 1
+script = ExtResource("6_abom2")
+max_speed = 32.0
+time_to_stop = 0.1
+ground_layer = NodePath("../BasicTilemapLayer")
+footstep_volume_db = -15.0
+collision = NodePath("CollisionShape2D")
+body_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Abomination3" unique_id=-2072745074]
+texture_filter = 1
+position = Vector2(1.0000006, -1.0000027)
+scale = Vector2(0.50000006, 0.50000024)
+texture = ExtResource("5_abom1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination3" unique_id=-2072745073]
+shape = SubResource("CircleShape2D_abom1")
+
+[node name="GoalAI" type="Node" parent="Abomination3" unique_id=-2072745072]
+script = ExtResource("7_goal1")
+
+[node name="GoalWander" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745071]
+script = ExtResource("9_gwnd1")
+terrain_weights = {
+1: 1.0,
+2: -0.8,
+3: 0.0
+}
+wander_radius = 50.0
+
+[node name="GoalSafety" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745070]
+script = ExtResource("10_gsaf")
+safe_tags = Array[int]([1])
+safety_timeout = 8.0
+wander_radius = 50.0
+
+[node name="GoalSleep" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745069]
+script = ExtResource("11_gslp")
+home_tags = Array[int]([1])
+safe_tags = Array[int]([1])
+wander_radius = 50.0
+
+[node name="GoalPlay" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745068]
+script = ExtResource("12_gpla")
+fun_tags = Array[int]([3])
+
+[node name="GoalExploreTrees" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745060]
+script = ExtResource("14_gxtr")
+
+[node name="Shadow" type="Sprite2D" parent="Abomination3" unique_id=-2072745067 node_paths=PackedStringArray("target_sprite", "creature")]
+script = ExtResource("8_shad1")
+target_sprite = NodePath("../Sprite2D")
+creature = NodePath("..")
+
+[node name="Abomination4" type="CharacterBody2D" parent="." unique_id=-961633965 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+position = Vector2(-105, 172)
+motion_mode = 1
+script = ExtResource("6_abom2")
+max_speed = 32.0
+time_to_stop = 0.1
+ground_layer = NodePath("../BasicTilemapLayer")
+footstep_volume_db = -15.0
+collision = NodePath("CollisionShape2D")
+body_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Abomination4" unique_id=-961633964]
+texture_filter = 1
+position = Vector2(1.0000006, -1.0000027)
+scale = Vector2(0.50000006, 0.50000024)
+texture = ExtResource("5_abom1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination4" unique_id=-961633963]
+shape = SubResource("CircleShape2D_abom1")
+
+[node name="GoalAI" type="Node" parent="Abomination4" unique_id=-961633962]
+script = ExtResource("7_goal1")
+
+[node name="GoalWander" type="Node" parent="Abomination4/GoalAI" unique_id=-961633961]
+script = ExtResource("9_gwnd1")
+terrain_weights = {
+1: 1.0,
+2: -0.8,
+3: 0.0
+}
+wander_radius = 50.0
+
+[node name="GoalSafety" type="Node" parent="Abomination4/GoalAI" unique_id=-961633960]
+script = ExtResource("10_gsaf")
+safe_tags = Array[int]([1])
+safety_timeout = 8.0
+wander_radius = 50.0
+
+[node name="GoalSleep" type="Node" parent="Abomination4/GoalAI" unique_id=-961633959]
+script = ExtResource("11_gslp")
+home_tags = Array[int]([1])
+safe_tags = Array[int]([1])
+wander_radius = 50.0
+
+[node name="GoalPlay" type="Node" parent="Abomination4/GoalAI" unique_id=-961633958]
+script = ExtResource("12_gpla")
+fun_tags = Array[int]([3])
+
+[node name="GoalExploreTrees" type="Node" parent="Abomination4/GoalAI" unique_id=-961633950]
+script = ExtResource("14_gxtr")
+
+[node name="Shadow" type="Sprite2D" parent="Abomination4" unique_id=-961633957 node_paths=PackedStringArray("target_sprite", "creature")]
+script = ExtResource("8_shad1")
+target_sprite = NodePath("../Sprite2D")
+creature = NodePath("..")
