@@ -1,9 +1,88 @@
 [gd_scene format=3 uid="uid://csf2aytfqg2xl"]
 
-[ext_resource type="Texture2D" uid="uid://d3yins5kt1rol" path="res://snivy.png" id="1_4cddb"]
+[ext_resource type="Script" uid="uid://cb063jf8xdbij" path="res://capture_scene.gd" id="1_cap"]
+[ext_resource type="Script" uid="uid://c4kkawkgkjo01" path="res://drawing_system.gd" id="2_cap"]
+[ext_resource type="PackedScene" uid="uid://burchin00001" path="res://creatures/urchin.tscn" id="3_7vojn"]
+[ext_resource type="PackedScene" uid="uid://cpyupiqqw6465" path="res://creatures/dinosaur.tscn" id="3_n5x12"]
+[ext_resource type="PackedScene" uid="uid://bbird0000001" path="res://creatures/bird.tscn" id="4_ogdtm"]
+[ext_resource type="PackedScene" uid="uid://bfox000000001" path="res://creatures/fox.tscn" id="4_ui4qe"]
 
-[node name="Node2D" type="Node2D" unique_id=1056454504]
+[node name="CaptureScene" type="Node2D" unique_id=808829657]
+script = ExtResource("1_cap")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1278979278]
-position = Vector2(118, 74)
-texture = ExtResource("1_4cddb")
+[node name="Background" type="Node2D" parent="." unique_id=291637186]
+
+[node name="BoundaryRect" type="ColorRect" parent="Background" unique_id=168444196]
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(0.149, 0.298, 0.149, 1)
+
+[node name="CreatureLayer" type="Node2D" parent="." unique_id=206099480]
+
+[node name="Dinosaur" parent="CreatureLayer" unique_id=1858447942 instance=ExtResource("3_n5x12")]
+position = Vector2(316, 219)
+
+[node name="Urchin" parent="CreatureLayer" unique_id=1852645322 instance=ExtResource("3_7vojn")]
+position = Vector2(212, 293)
+
+[node name="Fox" parent="CreatureLayer" unique_id=149474242 instance=ExtResource("4_ui4qe")]
+position = Vector2(466, 198)
+
+[node name="Bird" parent="CreatureLayer" unique_id=590855157 instance=ExtResource("4_ogdtm")]
+position = Vector2(191, 191)
+
+[node name="DrawingSystem" type="Node2D" parent="." unique_id=2022774286]
+script = ExtResource("2_cap")
+
+[node name="CaptureLine" type="Line2D" parent="DrawingSystem" unique_id=1092113232]
+width = 3.0
+default_color = Color(1, 0.502, 0.102, 1)
+
+[node name="LineBreakEffect" type="CPUParticles2D" parent="DrawingSystem" unique_id=919314245]
+emitting = false
+amount = 12
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.0
+direction = Vector2(0, 0)
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 100.0
+color = Color(1, 0.502, 0.102, 1)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1263701460]
+
+[node name="HPBar" type="HBoxContainer" parent="HUD" unique_id=703679654]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 38.0
+
+[node name="HPLabel" type="Label" parent="HUD/HPBar" unique_id=1306183701]
+layout_mode = 2
+text = "HP: "
+
+[node name="HPValue" type="Label" parent="HUD/HPBar" unique_id=137798028]
+layout_mode = 2
+text = "10/10"
+
+[node name="LoopCounter" type="HBoxContainer" parent="HUD" unique_id=975300487]
+offset_left = 10.0
+offset_top = 44.0
+offset_right = 210.0
+offset_bottom = 72.0
+
+[node name="LoopLabel" type="Label" parent="HUD/LoopCounter" unique_id=2095439681]
+layout_mode = 2
+text = "Loops: "
+
+[node name="LoopValue" type="Label" parent="HUD/LoopCounter" unique_id=380759726]
+layout_mode = 2
+text = "0"
+
+[node name="RunAwayButton" type="Button" parent="HUD" unique_id=757773952]
+offset_left = 10.0
+offset_top = 444.0
+offset_right = 130.0
+offset_bottom = 472.0
+text = "Run Away"

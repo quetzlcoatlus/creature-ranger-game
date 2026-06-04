@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3yins5kt1rol"
-path="res://.godot/imported/snivy.png-c7b5f7597aba938a57dbc4aa81317a64.ctex"
+uid="uid://buwro3pvvpuh2"
+path="res://.godot/imported/dinosaur.png-78b8af3bc28f3f318825bcc2957906d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://snivy.png"
-dest_files=["res://.godot/imported/snivy.png-c7b5f7597aba938a57dbc4aa81317a64.ctex"]
+source_file="res://dinosaur.png"
+dest_files=["res://.godot/imported/dinosaur.png-78b8af3bc28f3f318825bcc2957906d2.ctex"]
 
 [params]
 
