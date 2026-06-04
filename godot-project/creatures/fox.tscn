@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bfox000000001"]
+
+[ext_resource type="PackedScene" uid="uid://bcreature0001" path="res://creatures/creature.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://b3kvdg8vuqgcb" path="res://creatures/fox.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://c0efdyitf75n7" path="res://fox.png" id="3_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cap"]
+radius = 10.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bound"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dmg"]
+radius = 12.0
+
+[node name="Fox" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+loops_needed = 4
+damage_amount = 0
+speed = 200.0
+boundary_overshoot = 0.0
+boundary_mode = 0
+
+[node name="Sprite2D" parent="."]
+scale = Vector2(0.84, 0.84)
+texture = ExtResource("3_tex")
+
+[node name="CollisionShape2D" parent="CaptureHitbox"]
+shape = SubResource("CircleShape2D_cap")
+
+[node name="CollisionShape2D" parent="BoundingBox"]
+shape = SubResource("CircleShape2D_bound")
+
+[node name="CollisionShape2D" parent="DamageHitbox"]
+shape = SubResource("CircleShape2D_dmg")
