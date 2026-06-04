@@ -2,7 +2,7 @@
 
 ## Game Pitch	
 
-A short top-down creature capture prototype inspired heavily by Pokemon Ranger, where the player captures creatures by drawing loops around them and avoiding their behaviors. The game features a small overworld with NPC interactions and encounterable wild creatures showcasing 5 different behavior sets.
+A short top-down creature capture prototype inspired heavily by Pokemon Ranger, where the player captures creatures by drawing loops around them and avoiding their behaviors. The game features a small overworld with NPC interactions and encounterable wild creatures showcasing 4 different behavior sets.
 
 ## Core Gameplay Loop
 
