@@ -8,10 +8,16 @@
 [ext_resource type="Script" uid="uid://t11bilxckjq0" path="res://Scripts/World/GameEnvironment.gd" id="3_genv"]
 [ext_resource type="Texture2D" uid="uid://dnk5b52bitasq" path="res://ImageAssets/Terrain/Ice_IsometricTiles003.png" id="4_ugdhw"]
 [ext_resource type="Texture2D" uid="uid://dptnovanhsfbw" path="res://ImageAssets/Creatures/abomination001.png" id="5_abom1"]
+[ext_resource type="Texture2D" uid="uid://dj2bt5omqgcfe" path="res://ImageAssets/Creatures/bird.png" id="5_bird1"]
 [ext_resource type="Texture2D" uid="uid://gaclnp28uqjc" path="res://ImageAssets/Terrain/basic_tree_noTrunk.png" id="5_cjnpj"]
-[ext_resource type="Script" uid="uid://cxabom1nati0n" path="res://Scripts/Creatures/Abomination.gd" id="6_abom2"]
+[ext_resource type="Texture2D" uid="uid://dmtqlrmghque5" path="res://ImageAssets/Creatures/dinosaur.png" id="5_dino1"]
+[ext_resource type="Texture2D" uid="uid://cvrdt3hgogo8f" path="res://ImageAssets/Creatures/urchin.png" id="5_urch1"]
+[ext_resource type="Script" path="res://Scripts/Creatures/Bird.gd" id="6_bird1"]
+[ext_resource type="Script" path="res://Scripts/Creatures/Dinosaur.gd" id="6_dino1"]
+[ext_resource type="Script" path="res://Scripts/Creatures/Fox.gd" id="6_fox1"]
+[ext_resource type="Script" path="res://Scripts/Creatures/Urchin.gd" id="6_urch1"]
 [ext_resource type="Script" uid="uid://bgoalaictrl1" path="res://Scripts/AI/GoalAI.gd" id="7_goal1"]
-[ext_resource type="Script" path="res://Scripts/Creatures/ShadowSprite2D.gd" id="8_shad1"]
+[ext_resource type="Script" uid="uid://c0mvco4pi8uyy" path="res://Scripts/Creatures/ShadowSprite2D.gd" id="8_shad1"]
 [ext_resource type="Script" uid="uid://bgoalwand001" path="res://Scripts/AI/Goals/GoalWander.gd" id="9_gwnd1"]
 [ext_resource type="Script" uid="uid://bgoalsafe001" path="res://Scripts/AI/Goals/GoalSafety.gd" id="10_gsaf"]
 [ext_resource type="Script" uid="uid://bgoalslep001" path="res://Scripts/AI/Goals/GoalSleep.gd" id="11_gslp"]
@@ -171,10 +177,10 @@ shape = SubResource("CircleShape2D_ugdhw")
 position = Vector2(0, -2)
 zoom = Vector2(5, 5)
 
-[node name="Abomination" type="CharacterBody2D" parent="." unique_id=1111111111 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+[node name="Fox" type="CharacterBody2D" parent="." unique_id=1111111111 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
 position = Vector2(-58, 197)
 motion_mode = 1
-script = ExtResource("6_abom2")
+script = ExtResource("6_fox1")
 max_speed = 32.0
 time_to_stop = 0.1
 ground_layer = NodePath("../BasicTilemapLayer")
@@ -182,19 +188,19 @@ footstep_volume_db = -15.0
 collision = NodePath("CollisionShape2D")
 body_sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="Abomination" unique_id=1111111112]
+[node name="Sprite2D" type="Sprite2D" parent="Fox" unique_id=1111111112]
 texture_filter = 1
 position = Vector2(1.0000006, -1.0000027)
 scale = Vector2(0.50000006, 0.50000024)
 texture = ExtResource("5_abom1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination" unique_id=1111111113]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fox" unique_id=1111111113]
 shape = SubResource("CircleShape2D_abom1")
 
-[node name="GoalAI" type="Node" parent="Abomination" unique_id=1111111114]
+[node name="GoalAI" type="Node" parent="Fox" unique_id=1111111114]
 script = ExtResource("7_goal1")
 
-[node name="GoalWander" type="Node" parent="Abomination/GoalAI" unique_id=1111111120]
+[node name="GoalWander" type="Node" parent="Fox/GoalAI" unique_id=1111111120]
 script = ExtResource("9_gwnd1")
 terrain_weights = {
 1: 1.0,
@@ -203,194 +209,179 @@ terrain_weights = {
 }
 wander_radius = 50.0
 
-[node name="GoalSafety" type="Node" parent="Abomination/GoalAI" unique_id=1111111121]
+[node name="GoalSafety" type="Node" parent="Fox/GoalAI" unique_id=1111111121]
 script = ExtResource("10_gsaf")
 safe_tags = Array[int]([1])
 safety_timeout = 8.0
 wander_radius = 50.0
 
-[node name="GoalSleep" type="Node" parent="Abomination/GoalAI" unique_id=1111111122]
+[node name="GoalSleep" type="Node" parent="Fox/GoalAI" unique_id=1111111122]
 script = ExtResource("11_gslp")
 home_tags = Array[int]([1])
 safe_tags = Array[int]([1])
 wander_radius = 50.0
 
-[node name="GoalPlay" type="Node" parent="Abomination/GoalAI" unique_id=1111111123]
+[node name="GoalPlay" type="Node" parent="Fox/GoalAI" unique_id=1111111123]
 script = ExtResource("12_gpla")
 fun_tags = Array[int]([3])
 
-[node name="GoalExploreTrees" type="Node" parent="Abomination/GoalAI" unique_id=1111111130]
+[node name="GoalExploreTrees" type="Node" parent="Fox/GoalAI" unique_id=1111111130]
 script = ExtResource("14_gxtr")
 
-[node name="Shadow" type="Sprite2D" parent="Abomination" unique_id=1111111115 node_paths=PackedStringArray("target_sprite", "creature")]
+[node name="Shadow" type="Sprite2D" parent="Fox" unique_id=1111111115 node_paths=PackedStringArray("target_sprite", "creature")]
 script = ExtResource("8_shad1")
 target_sprite = NodePath("../Sprite2D")
 creature = NodePath("..")
 
-[node name="Abomination2" type="CharacterBody2D" parent="." unique_id=957119014 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
-position = Vector2(-77, 185)
+[node name="Bird" type="CharacterBody2D" parent="." unique_id=957119014 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+position = Vector2(11, 183)
 motion_mode = 1
-script = ExtResource("6_abom2")
-max_speed = 32.0
+script = ExtResource("6_bird1")
+max_speed = 48.0
 time_to_stop = 0.1
 ground_layer = NodePath("../BasicTilemapLayer")
 footstep_volume_db = -15.0
 collision = NodePath("CollisionShape2D")
 body_sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="Abomination2" unique_id=1406016439]
+[node name="Sprite2D" type="Sprite2D" parent="Bird" unique_id=1406016439]
 texture_filter = 1
 position = Vector2(1.000001, -2.0000029)
 scale = Vector2(0.50000006, 0.50000024)
-texture = ExtResource("5_abom1")
+texture = ExtResource("5_bird1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination2" unique_id=600480985]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bird" unique_id=600480985]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_abom1")
 
-[node name="GoalAI" type="Node" parent="Abomination2" unique_id=692515721]
+[node name="GoalAI" type="Node" parent="Bird" unique_id=692515721]
 script = ExtResource("7_goal1")
 
-[node name="GoalWander" type="Node" parent="Abomination2/GoalAI" unique_id=1552457476]
+[node name="GoalWander" type="Node" parent="Bird/GoalAI" unique_id=1552457476]
 script = ExtResource("9_gwnd1")
 terrain_weights = {
-1: 1.0,
-2: -0.8,
+1: 0.4,
+2: 0.0,
 3: 0.0
 }
-wander_radius = 50.0
+wander_radius = 70.0
 
-[node name="GoalSafety" type="Node" parent="Abomination2/GoalAI" unique_id=1199152985]
+[node name="GoalSafety" type="Node" parent="Bird/GoalAI" unique_id=1199152985]
 script = ExtResource("10_gsaf")
 safe_tags = Array[int]([1])
-safety_timeout = 8.0
-wander_radius = 50.0
+safety_timeout = 10.0
+wander_radius = 70.0
 
-[node name="GoalSleep" type="Node" parent="Abomination2/GoalAI" unique_id=1097561137]
+[node name="GoalSleep" type="Node" parent="Bird/GoalAI" unique_id=1097561137]
 script = ExtResource("11_gslp")
 home_tags = Array[int]([1])
 safe_tags = Array[int]([1])
-wander_radius = 50.0
+wander_radius = 70.0
 
-[node name="GoalPlay" type="Node" parent="Abomination2/GoalAI" unique_id=1707822380]
-script = ExtResource("12_gpla")
-fun_tags = Array[int]([3])
-
-[node name="GoalExploreTrees" type="Node" parent="Abomination2/GoalAI" unique_id=1707822381]
+[node name="GoalExploreTrees" type="Node" parent="Bird/GoalAI" unique_id=1707822381]
 script = ExtResource("14_gxtr")
+search_radius = 160.0
+linger_time = 3.0
 
-[node name="Shadow" type="Sprite2D" parent="Abomination2" unique_id=740282877 node_paths=PackedStringArray("target_sprite", "creature")]
+[node name="Shadow" type="Sprite2D" parent="Bird" unique_id=740282877 node_paths=PackedStringArray("target_sprite", "creature")]
 script = ExtResource("8_shad1")
 target_sprite = NodePath("../Sprite2D")
 creature = NodePath("..")
 
-[node name="Abomination3" type="CharacterBody2D" parent="." unique_id=-2072745075 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+[node name="Dinosaur" type="CharacterBody2D" parent="." unique_id=-2072745075 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
 position = Vector2(-35, 213)
 motion_mode = 1
-script = ExtResource("6_abom2")
-max_speed = 32.0
-time_to_stop = 0.1
+script = ExtResource("6_dino1")
+max_speed = 24.0
+time_to_stop = 0.15
 ground_layer = NodePath("../BasicTilemapLayer")
 footstep_volume_db = -15.0
 collision = NodePath("CollisionShape2D")
 body_sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="Abomination3" unique_id=-2072745074]
+[node name="Sprite2D" type="Sprite2D" parent="Dinosaur" unique_id=-2072745074]
 texture_filter = 1
 position = Vector2(1.0000006, -1.0000027)
 scale = Vector2(0.50000006, 0.50000024)
-texture = ExtResource("5_abom1")
+texture = ExtResource("5_dino1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination3" unique_id=-2072745073]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dinosaur" unique_id=-2072745073]
 shape = SubResource("CircleShape2D_abom1")
 
-[node name="GoalAI" type="Node" parent="Abomination3" unique_id=-2072745072]
+[node name="GoalAI" type="Node" parent="Dinosaur" unique_id=-2072745072]
 script = ExtResource("7_goal1")
 
-[node name="GoalWander" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745071]
+[node name="GoalWander" type="Node" parent="Dinosaur/GoalAI" unique_id=-2072745071]
 script = ExtResource("9_gwnd1")
 terrain_weights = {
-1: 1.0,
-2: -0.8,
-3: 0.0
+1: 0.0,
+2: 1.0,
+3: -0.8
 }
 wander_radius = 50.0
 
-[node name="GoalSafety" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745070]
+[node name="GoalSafety" type="Node" parent="Dinosaur/GoalAI" unique_id=-2072745070]
 script = ExtResource("10_gsaf")
-safe_tags = Array[int]([1])
-safety_timeout = 8.0
+safe_tags = Array[int]([2])
+safety_timeout = 10.0
 wander_radius = 50.0
 
-[node name="GoalSleep" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745069]
+[node name="GoalSleep" type="Node" parent="Dinosaur/GoalAI" unique_id=-2072745069]
 script = ExtResource("11_gslp")
-home_tags = Array[int]([1])
-safe_tags = Array[int]([1])
+home_tags = Array[int]([2])
+safe_tags = Array[int]([2])
 wander_radius = 50.0
 
-[node name="GoalPlay" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745068]
-script = ExtResource("12_gpla")
-fun_tags = Array[int]([3])
-
-[node name="GoalExploreTrees" type="Node" parent="Abomination3/GoalAI" unique_id=-2072745060]
-script = ExtResource("14_gxtr")
-
-[node name="Shadow" type="Sprite2D" parent="Abomination3" unique_id=-2072745067 node_paths=PackedStringArray("target_sprite", "creature")]
+[node name="Shadow" type="Sprite2D" parent="Dinosaur" unique_id=-2072745067 node_paths=PackedStringArray("target_sprite", "creature")]
 script = ExtResource("8_shad1")
 target_sprite = NodePath("../Sprite2D")
 creature = NodePath("..")
 
-[node name="Abomination4" type="CharacterBody2D" parent="." unique_id=-961633965 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
+[node name="Urchin" type="CharacterBody2D" parent="." unique_id=-961633965 node_paths=PackedStringArray("ground_layer", "collision", "body_sprite")]
 position = Vector2(-105, 172)
 motion_mode = 1
-script = ExtResource("6_abom2")
-max_speed = 32.0
+script = ExtResource("6_urch1")
+max_speed = 14.0
 time_to_stop = 0.1
 ground_layer = NodePath("../BasicTilemapLayer")
 footstep_volume_db = -15.0
 collision = NodePath("CollisionShape2D")
 body_sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="Abomination4" unique_id=-961633964]
+[node name="Sprite2D" type="Sprite2D" parent="Urchin" unique_id=-961633964]
 texture_filter = 1
 position = Vector2(1.0000006, -1.0000027)
 scale = Vector2(0.50000006, 0.50000024)
-texture = ExtResource("5_abom1")
+texture = ExtResource("5_urch1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Abomination4" unique_id=-961633963]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Urchin" unique_id=-961633963]
 shape = SubResource("CircleShape2D_abom1")
 
-[node name="GoalAI" type="Node" parent="Abomination4" unique_id=-961633962]
+[node name="GoalAI" type="Node" parent="Urchin" unique_id=-961633962]
 script = ExtResource("7_goal1")
 
-[node name="GoalWander" type="Node" parent="Abomination4/GoalAI" unique_id=-961633961]
+[node name="GoalWander" type="Node" parent="Urchin/GoalAI" unique_id=-961633961]
 script = ExtResource("9_gwnd1")
 terrain_weights = {
-1: 1.0,
-2: -0.8,
-3: 0.0
+1: 0.0,
+2: -0.5,
+3: 1.0
 }
-wander_radius = 50.0
+wander_radius = 40.0
 
-[node name="GoalSafety" type="Node" parent="Abomination4/GoalAI" unique_id=-961633960]
+[node name="GoalSafety" type="Node" parent="Urchin/GoalAI" unique_id=-961633960]
 script = ExtResource("10_gsaf")
-safe_tags = Array[int]([1])
-safety_timeout = 8.0
-wander_radius = 50.0
+safe_tags = Array[int]([3])
+safety_timeout = 12.0
+wander_radius = 40.0
 
-[node name="GoalSleep" type="Node" parent="Abomination4/GoalAI" unique_id=-961633959]
+[node name="GoalSleep" type="Node" parent="Urchin/GoalAI" unique_id=-961633959]
 script = ExtResource("11_gslp")
-home_tags = Array[int]([1])
-safe_tags = Array[int]([1])
-wander_radius = 50.0
+home_tags = Array[int]([3])
+safe_tags = Array[int]([3])
+wander_radius = 40.0
 
-[node name="GoalPlay" type="Node" parent="Abomination4/GoalAI" unique_id=-961633958]
-script = ExtResource("12_gpla")
-fun_tags = Array[int]([3])
-
-[node name="GoalExploreTrees" type="Node" parent="Abomination4/GoalAI" unique_id=-961633950]
-script = ExtResource("14_gxtr")
-
-[node name="Shadow" type="Sprite2D" parent="Abomination4" unique_id=-961633957 node_paths=PackedStringArray("target_sprite", "creature")]
+[node name="Shadow" type="Sprite2D" parent="Urchin" unique_id=-961633957 node_paths=PackedStringArray("target_sprite", "creature")]
 script = ExtResource("8_shad1")
 target_sprite = NodePath("../Sprite2D")
 creature = NodePath("..")
