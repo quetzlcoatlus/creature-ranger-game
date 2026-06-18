@@ -1,22 +1,25 @@
-## TreeLayerController — manages tree visuals, glow, and per-tree shadow sprites.
+## TreeLayerController — adds glow + per-tree cast shadows to the ObjectLayer.
 ##
-## Attaches to the ObjectLayer TileMapLayer, which is used as a data layer only
-## (made invisible by this script). One visual Sprite2D is spawned per tree tile
-## directly in the parent scene so each tree participates in y_sort against
-## characters individually (a TileMapLayer as a whole sorts at y=0, which is
-## always behind any character — spawning real nodes fixes this).
+## Attaches to the ObjectLayer TileMapLayer. The layer renders its own tiles
+## (trees and any other objects) exactly as the editor shows them — we do NOT
+## re-spawn tree sprites by hand anymore, because reproducing Godot's tile
+## placement math in script is what caused the editor/runtime misalignment.
+## In Godot 4 a y_sort_enabled TileMapLayer depth-sorts its individual tiles
+## against sibling nodes (the player, creatures) on its own, so letting the
+## layer draw the trees keeps both alignment AND sorting correct for free.
 ##
-## Glow: warm golden overlay during sunrise / sunset.
-## Shadows: one squashed Sprite2D per tree, direction follows GameEnvironment sun angle.
+## This script now only adds two things on top of the rendered tiles:
+##   • Glow:    warm golden overlay (shader material on the layer) at sunrise/sunset.
+##   • Shadows: one squashed Sprite2D per tree, direction follows the sun angle.
 
 extends TileMapLayer
 
 const TREE_TAG : int = 5
 const SHADOW_Z : int = -1  # same z as BasicTilemapLayer; renders on top via scene order
 
-## Nudge the y foot-anchor of the shadow and y-sort position.
-## Positive moves the anchor down. Adjust if the sprite's visual bottom
-## isn't exactly at the tile centre after tweaking texture_origin.
+## Nudge where each tree's shadow is anchored (the trunk base).
+## Positive moves the anchor down. Only affects shadows, not the tree art —
+## the art is placed by the tile's Texture Origin in the TileSet.
 @export var tree_foot_y_offset : int = 0
 
 # ── Glow shader ────────────────────────────────────────────────────────────────
@@ -28,10 +31,13 @@ uniform vec4  glow_color : source_color = vec4(1.0, 0.62, 0.12, 1.0);
 
 void fragment() {
 	vec4 tex = texture(TEXTURE, UV);
-	if (tex.a < 0.01) { COLOR = vec4(0.0); return; }
-	float boost  = 1.0 + time_glow * 0.35;
-	vec3  warmed = mix(tex.rgb, tex.rgb * glow_color.rgb * boost, time_glow * 0.55);
-	COLOR = vec4(warmed, tex.a);
+	if (tex.a < 0.01) {
+		COLOR = vec4(0.0);
+	} else {
+		float boost  = 1.0 + time_glow * 0.35;
+		vec3  warmed = mix(tex.rgb, tex.rgb * glow_color.rgb * boost, time_glow * 0.55);
+		COLOR = vec4(warmed, tex.a);
+	}
 }
 """
 
@@ -40,23 +46,22 @@ void fragment() {
 @export var shadow_alpha  : float = 0.40
 @export var shadow_color  : Color = Color(0.05, 0.05, 0.12)
 
-var _mat            : ShaderMaterial  = null
-var _shadow_root    : Node2D          = null
-var _game_env       : Node            = null
-var _visual_sprites : Array[Sprite2D] = []
+var _mat         : ShaderMaterial = null
+var _shadow_root : Node2D         = null
+var _game_env    : Node           = null
 
 
 func _ready() -> void:
-	# This TileMapLayer is a data store only; GoalExploreTrees still queries it.
-	visible = false
-
+	# Keep the layer visible: it draws the trees itself, perfectly aligned with
+	# the editor. Apply the glow shader to the whole layer so the trees glow.
 	var sh  := Shader.new()
 	sh.code = _SHADER_SRC
 	_mat        = ShaderMaterial.new()
 	_mat.shader = sh
+	material = _mat
 
 	_game_env = get_tree().get_first_node_in_group("game_environment")
-	call_deferred("_setup_trees")
+	call_deferred("_setup_shadows")
 
 
 func _process(_delta: float) -> void:
@@ -71,20 +76,14 @@ func _process(_delta: float) -> void:
 
 
 func _exit_tree() -> void:
-	for s in _visual_sprites:
-		if is_instance_valid(s):
-			s.queue_free()
-	_visual_sprites.clear()
+	if _shadow_root != null and is_instance_valid(_shadow_root):
+		_shadow_root.queue_free()
+		_shadow_root = null
 
 
-# ── Tree + shadow setup ────────────────────────────────────────────────────────
+# ── Shadow setup ───────────────────────────────────────────────────────────────
 
-func _setup_trees() -> void:
-	for s in _visual_sprites:
-		if is_instance_valid(s):
-			s.queue_free()
-	_visual_sprites.clear()
-
+func _setup_shadows() -> void:
 	if _shadow_root != null and is_instance_valid(_shadow_root):
 		_shadow_root.queue_free()
 
@@ -98,12 +97,11 @@ func _setup_trees() -> void:
 		var td := get_cell_tile_data(cell)
 		if td == null:
 			continue
-		if int(td.get_custom_data("terrain_tag")) != TREE_TAG:
-			continue
-		_create_tree(cell, td)
+		if int(td.get_custom_data("terrain_tag")) == TREE_TAG:
+			_create_shadow(cell)
 
 
-func _create_tree(cell: Vector2i, td: TileData) -> void:
+func _create_shadow(cell: Vector2i) -> void:
 	var source_id    := get_cell_source_id(cell)
 	var atlas_coords := get_cell_atlas_coords(cell)
 	var ts           := tile_set
@@ -118,35 +116,17 @@ func _create_tree(cell: Vector2i, td: TileData) -> void:
 	atlas_tex.atlas  = source.texture
 	atlas_tex.region = region
 
-	var cell_world    := to_global(map_to_local(cell))
+	# foot_pos: the trunk base = the tile cell (where the tree "stands"),
+	# nudged by tree_foot_y_offset. The Texture Origin keeps the art's base here.
+	var foot_pos      := to_global(map_to_local(cell)) + Vector2(0.0, tree_foot_y_offset)
 	var sprite_half_h := region.size.y * 0.5
-	# foot_pos: the base of the tree sprite in world space (visual bottom).
-	# With texture_origin.y = -32 and sprite_half_h = 32 this equals cell_world exactly.
-	var foot_pos := cell_world + Vector2(0.0, td.texture_origin.y + sprite_half_h + tree_foot_y_offset)
 
-	# ── Visual sprite ─────────────────────────────────────────────────────────
-	# Added directly to the parent scene (OverworldScene) so it is a real node
-	# in the y_sort group alongside the player and creatures.
-	# global_position.y = foot_pos.y (sprite bottom) → that is the sort key.
-	# offset.y = -sprite_half_h shifts the visual up so its bottom sits at global_position.y.
-	var vis            := Sprite2D.new()
-	vis.texture        = atlas_tex
-	vis.texture_filter = TEXTURE_FILTER_NEAREST
-	vis.material       = _mat
-	vis.offset         = Vector2(0.0, -sprite_half_h)
-	vis.global_position = foot_pos
-	get_parent().add_child(vis)
-	_visual_sprites.append(vis)
-
-	# ── Shadow sprite ─────────────────────────────────────────────────────────
-	var shadow              := Sprite2D.new()
-	shadow.texture          = atlas_tex
-	shadow.texture_filter   = TEXTURE_FILTER_NEAREST
-	shadow.offset           = Vector2.ZERO
-	shadow.use_parent_material = false
-
+	var shadow            := Sprite2D.new()
+	shadow.texture        = atlas_tex
+	shadow.texture_filter = TEXTURE_FILTER_NEAREST
+	shadow.offset         = Vector2.ZERO
 	shadow.global_position = foot_pos
-	shadow.set_meta("foot_pos",     foot_pos)
+	shadow.set_meta("foot_pos",      foot_pos)
 	shadow.set_meta("sprite_half_h", sprite_half_h)
 
 	_shadow_root.add_child(shadow)

@@ -1,4 +1,4 @@
-extends Creature
+extends CaptureCreature
 
 # Bird: travels in a straight line and wraps around the scene boundary.
 # boundary_mode is set to WRAP in bird.tscn.

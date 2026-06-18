@@ -47,8 +47,9 @@ func _ready() -> void:
 		for neighbor: Vector2i in get_surrounding_cells(ground_tile):
 			if filled_set.has(neighbor):
 				continue  # another tile is already here
-			if get_cell_source_id(neighbor) == -1:
-				set_cell(neighbor, 0, Vector2i.ZERO)  # visual stamp
+			# Collision-only: intentionally do NOT paint a visible tile here.
+			# The empty edge cell stays empty so the water background shows through,
+			# while still getting an invisible wall so the player can't leave the island.
 			collision_cells[neighbor] = true
 
 	# Explicit solid tiles: collision sits at the tile's own map position.

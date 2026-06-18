@@ -32,6 +32,11 @@ class_name Creature
 @export var sprint_max_mult   : float = 1.6
 ## Fraction of max_speed while crouching.
 @export var crouch_speed_mult : float = 0.5
+## Isometric vertical foreshortening for on-screen movement SPEED.
+## 1.0 = top-down (every direction moves the same screen distance).
+## < 1.0 makes north/south slower than east/west to match the tile projection
+## (≈0.5 for 2:1 tiles). AI creatures leave this at 1.0; the Player overrides it.
+@export var iso_y_squash : float = 1.0
 
 # Derived — recomputed from exports in _ready().
 var _accel      : float
@@ -95,6 +100,9 @@ signal landed()
 ## Fired when the creature crosses into a tile with different modifiers or tag.
 ## old_tag / new_tag are terrain_tag int values (0 = no tile / neutral).
 signal terrain_changed(speed_mod: float, jump_mod: float, friction_mod: float, turn_mod: float, old_tag: int, new_tag: int)
+## Fired when the player's interact/"punch" action reaches this creature.
+## Connect this for future behaviour (no damage is applied by default).
+signal interacted(by: Node)
 
 # ─── Node refs ───────────────────────────────────────────────────────────────
 @export var collision : CollisionShape2D
@@ -105,11 +113,43 @@ signal terrain_changed(speed_mod: float, jump_mod: float, friction_mod: float, t
 ## Player manages its own sprite — this is for AI creatures.
 @export var body_sprite : Sprite2D
 
+# ─── Interaction ──────────────────────────────────────────────────────────────
+@export_group("Interaction")
+## Tint flashed on body_sprite when the player interacts ("punches") this
+## creature. Values above 1.0 brighten it. No damage is applied.
+@export var highlight_color : Color = Color(1.6, 1.6, 1.0)
+## Seconds for the highlight to fade back to normal.
+@export var highlight_time  : float = 0.4
+
+var _base_modulate   : Color = Color.WHITE
+var _highlight_tween : Tween = null
+
 
 func _ready() -> void:
 	_accel      = max_speed / time_to_max
 	_friction   = max_speed / time_to_stop
 	_turn_speed = max_speed / time_to_turn
+
+	add_to_group("creatures")
+	if body_sprite != null:
+		_base_modulate = body_sprite.modulate
+
+
+# ─── Interaction (no damage — highlight + signal only) ────────────────────────
+## Called by the player's interact/"punch" action when this creature is in range.
+func interact(by: Node = null) -> void:
+	interacted.emit(by)
+	_flash_highlight()
+
+
+func _flash_highlight() -> void:
+	if body_sprite == null:
+		return
+	if _highlight_tween != null and _highlight_tween.is_valid():
+		_highlight_tween.kill()
+	body_sprite.modulate = highlight_color
+	_highlight_tween = create_tween()
+	_highlight_tween.tween_property(body_sprite, "modulate", _base_modulate, highlight_time)
 
 
 func _physics_process(delta: float) -> void:
@@ -264,8 +304,14 @@ func _accelerate(delta: float) -> void:
 
 func _clamp_speed() -> void:
 	var limit := _current_max_speed()
-	if velocity.length() > limit:
-		velocity = velocity.normalized() * limit
+	# Clamp in "ground" space — un-squash Y first — so the max speed is the same in
+	# every world direction, but on screen north/south ends up foreshortened
+	# (slower) than east/west. That vertical compression is what reads as isometric
+	# rather than flat top-down. With iso_y_squash = 1.0 this is a plain clamp.
+	var ground := Vector2(velocity.x, velocity.y / iso_y_squash)
+	if ground.length() > limit:
+		ground   = ground.normalized() * limit
+		velocity = Vector2(ground.x, ground.y * iso_y_squash)
 
 
 func _apply_friction(delta: float) -> void:

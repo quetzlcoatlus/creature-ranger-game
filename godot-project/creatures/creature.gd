@@ -1,4 +1,4 @@
-class_name Creature
+class_name CaptureCreature
 extends CharacterBody2D
 
 signal captured
