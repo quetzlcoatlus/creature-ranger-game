@@ -142,6 +142,12 @@ func interact(by: Node = null) -> void:
 	_flash_highlight()
 
 
+## Species key mapping this creature to its capture-scene counterpart.
+## Overridden by each subclass (fox / bird / dinosaur / urchin).
+func species_id() -> StringName:
+	return &""
+
+
 func _flash_highlight() -> void:
 	if body_sprite == null:
 		return

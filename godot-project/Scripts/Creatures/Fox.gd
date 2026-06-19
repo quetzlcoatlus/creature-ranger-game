@@ -17,3 +17,7 @@
 
 extends Creature
 class_name Fox
+
+
+func species_id() -> StringName:
+	return &"fox"

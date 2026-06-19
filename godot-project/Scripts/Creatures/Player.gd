@@ -286,6 +286,7 @@ func _do_interact() -> void:
 	_punch_time_left = float(maxi(punch_frames, 1)) / maxf(punch_fps, 0.001)
 
 	var point := global_position + _interact_dir() * interact_distance
+	var hit : Array = []
 	for node in get_tree().get_nodes_in_group("creatures"):
 		if node == self or not (node is Node2D):
 			continue
@@ -294,6 +295,12 @@ func _do_interact() -> void:
 		var c := node as Node2D
 		if c.global_position.distance_to(point) <= interact_radius and c.has_method("interact"):
 			c.interact(self)
+			hit.append(c)
+
+	# Hand the caught creatures to the SceneManager (it batches them and launches
+	# the capture scene). Highlight already played in c.interact() above.
+	if not hit.is_empty() and has_node("/root/EventBus"):
+		EventBus.creatures_interacted.emit(hit)
 
 	if show_interact_gizmo:
 		queue_redraw()

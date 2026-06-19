@@ -24,6 +24,10 @@ signal weather_changed(old_weather: int, new_weather: int)
 # ─── World interaction ────────────────────────────────────────────────────────
 signal area_entered(area: Area2D, tags: Array[String])
 signal area_exited(area: Area2D)
+## Emitted by the player's interact/"punch" when it catches one or more creatures.
+## SceneManager batches these and launches the capture scene. `creatures` are the
+## live overworld Creature nodes that were hit.
+signal creatures_interacted(creatures: Array)
 
 # ─── Footsteps ───────────────────────────────────────────────────────────────
 ## Emitted when a creature starts moving on a terrain (or crosses to a new one).

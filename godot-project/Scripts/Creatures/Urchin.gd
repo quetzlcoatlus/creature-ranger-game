@@ -14,3 +14,7 @@
 
 extends Creature
 class_name Urchin
+
+
+func species_id() -> StringName:
+	return &"urchin"

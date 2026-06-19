@@ -24,6 +24,9 @@ position = Vector2(316, 219)
 
 [node name="Urchin" parent="CreatureLayer" unique_id=1852645322 instance=ExtResource("3_7vojn")]
 position = Vector2(212, 293)
+loops_needed = null
+boundary_overshoot = null
+boundary_mode = null
 
 [node name="Fox" parent="CreatureLayer" unique_id=149474242 instance=ExtResource("4_ui4qe")]
 position = Vector2(466, 198)
