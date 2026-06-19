@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://csf2aytfqg2xl"]
 
 [ext_resource type="Script" uid="uid://cb063jf8xdbij" path="res://capture_scene.gd" id="1_cap"]
-[ext_resource type="Script" uid="uid://c4kkawkgkjo01" path="res://drawing_system.gd" id="2_cap"]
+[ext_resource type="Script" path="res://drawing_system.gd" id="2_cap"]
 [ext_resource type="PackedScene" uid="uid://burchin00001" path="res://creatures/urchin.tscn" id="3_7vojn"]
 [ext_resource type="PackedScene" uid="uid://cpyupiqqw6465" path="res://creatures/dinosaur.tscn" id="3_n5x12"]
 [ext_resource type="PackedScene" uid="uid://bbird0000001" path="res://creatures/bird.tscn" id="4_ogdtm"]

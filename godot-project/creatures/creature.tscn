@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bcreature0001"]
 
-[ext_resource type="Script" path="res://creatures/creature.gd" id="1_base"]
+[ext_resource type="Script" uid="uid://dx00pt076oexk" path="res://creatures/creature.gd" id="1_base"]
 [ext_resource type="Script" uid="uid://c02mkxpf8j6wb" path="res://creatures/shared/capture_hitbox.gd" id="2_base"]
 [ext_resource type="Script" uid="uid://0lhjqxxw1lsm" path="res://creatures/shared/bounding_box.gd" id="3_base"]
 [ext_resource type="Script" uid="uid://cepnfq7bnqdy4" path="res://creatures/shared/damage_hitbox.gd" id="4_base"]
@@ -14,42 +14,43 @@ radius = 20.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_3"]
 radius = 14.0
 
-[node name="Creature" type="CharacterBody2D"]
+[node name="Creature" type="CharacterBody2D" unique_id=1811426619]
 collision_layer = 2
-collision_mask = 1
 script = ExtResource("1_base")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1223372896]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=180622716]
 
-[node name="LoopLabel" type="Label" parent="."]
-position = Vector2(-40, -45)
+[node name="LoopLabel" type="Label" parent="." unique_id=1011993100]
 custom_minimum_size = Vector2(80, 20)
+offset_left = -40.0
+offset_top = -45.0
+offset_right = -40.0
+offset_bottom = -45.0
 horizontal_alignment = 1
-visible = false
 
-[node name="CaptureHitbox" type="Area2D" parent="."]
+[node name="CaptureHitbox" type="Area2D" parent="." unique_id=1954858774]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("2_base")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CaptureHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CaptureHitbox" unique_id=1423479271]
 shape = SubResource("CircleShape2D_1")
 
-[node name="BoundingBox" type="Area2D" parent="."]
+[node name="BoundingBox" type="Area2D" parent="." unique_id=1867213838]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("3_base")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundingBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundingBox" unique_id=2051356403]
 shape = SubResource("CircleShape2D_2")
 
-[node name="DamageHitbox" type="Area2D" parent="."]
+[node name="DamageHitbox" type="Area2D" parent="." unique_id=1711202959]
 collision_layer = 8
 collision_mask = 0
 monitoring = false
 script = ExtResource("4_base")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHitbox" unique_id=362797375]
 shape = SubResource("CircleShape2D_3")

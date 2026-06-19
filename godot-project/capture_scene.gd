@@ -9,9 +9,13 @@ extends Node2D
 const MAX_HP := 10
 var player_hp := MAX_HP
 var creatures_remaining := 0
-var _active_creature: Creature = null
+var _active_creature: CaptureCreature = null
 
 enum SceneResult { SUCCESS, FLED, DEAD }
+
+## Emitted when the encounter ends. SceneManager listens and returns to the
+## overworld, removing captured creatures on SUCCESS. `result` is a SceneResult.
+signal finished(result: int)
 
 
 func _ready() -> void:
@@ -24,7 +28,7 @@ func _ready() -> void:
 
 	var bounds := ($Background/BoundaryRect as ColorRect).get_global_rect()
 	for child in creature_layer.get_children():
-		var creature := child as Creature
+		var creature := child as CaptureCreature
 		if not creature:
 			continue
 		creatures_remaining += 1
@@ -44,7 +48,7 @@ func _ready() -> void:
 
 
 func _on_loop_completed(node: Node2D) -> void:
-	var creature := node as Creature
+	var creature := node as CaptureCreature
 	if not creature:
 		return
 	_active_creature = creature
@@ -59,7 +63,7 @@ func _on_line_broke() -> void:
 func _on_line_cleared() -> void:
 	_active_creature = null
 	for child in creature_layer.get_children():
-		var creature := child as Creature
+		var creature := child as CaptureCreature
 		if creature:
 			creature.reset_loops()
 	_update_loop_display()
@@ -95,14 +99,14 @@ func _update_loop_display() -> void:
 		loop_value.text = "0"
 
 
+var _finished := false
+
 func _finish_scene(result: SceneResult) -> void:
+	if _finished:
+		return  # guard against double-fire (e.g. last capture + flee same frame)
+	_finished = true
 	match result:
-		SceneResult.SUCCESS:
-			print("Capture success! Returning to overworld.")
-			# TODO: get_tree().change_scene_to_file("res://overworld.tscn")
-		SceneResult.FLED:
-			print("Player fled. Returning to overworld.")
-			# TODO: get_tree().change_scene_to_file("res://overworld.tscn")
-		SceneResult.DEAD:
-			print("Player fainted. Returning to main menu.")
-			# TODO: get_tree().change_scene_to_file("res://main_menu.tscn")
+		SceneResult.SUCCESS: print("Capture success! Returning to overworld.")
+		SceneResult.FLED:    print("Player fled. Returning to overworld.")
+		SceneResult.DEAD:    print("Player fainted.")
+	finished.emit(result)
