@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Creature-Ranger-Godot"
-run/main_scene="uid://csf2aytfqg2xl"
+run/main_scene="res://Game.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 

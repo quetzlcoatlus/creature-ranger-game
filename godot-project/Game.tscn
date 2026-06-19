@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bgamescene001"]
+
+[ext_resource type="Script" path="res://SceneManager.gd" id="1_sm"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_sm")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="CaptureTally" type="Label" parent="HUD"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 240.0
+offset_bottom = 96.0
+text = "Captured: none"

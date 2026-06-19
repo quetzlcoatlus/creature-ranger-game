@@ -13,6 +13,10 @@ var _active_creature: Creature = null
 
 enum SceneResult { SUCCESS, FLED, DEAD }
 
+## Emitted when the encounter ends. SceneManager listens and returns to the
+## overworld, removing captured creatures on SUCCESS. `result` is a SceneResult.
+signal finished(result: int)
+
 
 func _ready() -> void:
 	drawing_system.creature_layer = creature_layer
@@ -95,14 +99,14 @@ func _update_loop_display() -> void:
 		loop_value.text = "0"
 
 
+var _finished := false
+
 func _finish_scene(result: SceneResult) -> void:
+	if _finished:
+		return  # guard against double-fire (e.g. last capture + flee same frame)
+	_finished = true
 	match result:
-		SceneResult.SUCCESS:
-			print("Capture success! Returning to overworld.")
-			# TODO: get_tree().change_scene_to_file("res://overworld.tscn")
-		SceneResult.FLED:
-			print("Player fled. Returning to overworld.")
-			# TODO: get_tree().change_scene_to_file("res://overworld.tscn")
-		SceneResult.DEAD:
-			print("Player fainted. Returning to main menu.")
-			# TODO: get_tree().change_scene_to_file("res://main_menu.tscn")
+		SceneResult.SUCCESS: print("Capture success! Returning to overworld.")
+		SceneResult.FLED:    print("Player fled. Returning to overworld.")
+		SceneResult.DEAD:    print("Player fainted.")
+	finished.emit(result)
