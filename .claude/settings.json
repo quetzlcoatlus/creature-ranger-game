@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth *)",
+      "Bash(git -C \"c:/Users/migri/Documents/GitHub/creature-ranger-game\" log --oneline --all)",
+      "Read(//c/Users/migri/Documents/GitHub/**)",
+      "Bash(gh repo *)",
+      "Bash(GH_TOKEN=\"\" gh repo fork quetzlcoatlus/creature-ranger-game --clone=false)",
+      "Bash(GH_TOKEN=\"\" gh repo rename digestive-system-ranger --repo migriv24/creature-ranger-game)",
+      "Bash(GH_TOKEN=\"\" gh repo view migriv24/digestive-system-ranger --json name,url)",
+      "PowerShell($files=\"abomination001\",\"bird\",\"dinosaur\",\"urchin\"; foreach\\($n in $files\\){ $p=\"godot-project/ImageAssets/Creatures/$n.png\"; if\\(Test-Path $p\\){ Add-Type -AssemblyName System.Drawing; $img=[System.Drawing.Image]::FromFile\\(\\(Resolve-Path $p\\)\\); \"$n : $\\($img.Width\\)x$\\($img.Height\\)\"; $img.Dispose\\(\\) } })",
+      "PowerShell(Add-Type -AssemblyName System.Drawing; foreach\\($n in \"abomination001\",\"bird\",\"dinosaur\",\"urchin\"\\){ $p=Resolve-Path \"ImageAssets/Creatures/$n.png\" -ErrorAction SilentlyContinue; if\\($p\\){ try{ $img=[System.Drawing.Image]::FromFile\\($p\\); Write-Output \"$n : $\\($img.Width\\)x$\\($img.Height\\)\"; $img.Dispose\\(\\) }catch{ Write-Output \"$n : ERR $_\" } } else { Write-Output \"$n : missing\" } })",
+      "Bash(git check-ignore *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh api *)",
+      "Bash(python3 -)",
+      "Bash(where godot *)",
+      "Bash(where Godot)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Users/migri/Downloads/**)",
+      "Bash(rm -f _capture.gd _capture.tscn _capture.gd.uid _capture.png)",
+      "Bash(ls _capture*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "WebFetch(domain:docs.godotengine.org)",
+      "Bash(cp \"/c/Users/migri/Downloads/isometric_character_asset_pack/\"*.png ImageAssets/Player/)",
+      "Bash(cp \"/c/Users/migri/Downloads/isometric_character_asset_pack/\"*.aseprite ImageAssets/Player/)",
+      "Read(//c/c/Users/migri/Documents/GitHub/creature-ranger-game/godot-project/ImageAssets/**)"
+    ]
+  }
+}

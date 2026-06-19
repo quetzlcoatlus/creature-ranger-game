@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cbrne3r7amwa8"]
+
+[ext_resource type="Script" uid="uid://baudiomgr001" path="res://autoload/AudioManager.gd" id="1_scr"]
+[ext_resource type="AudioStream" uid="uid://budqomslql1e" path="res://AudioAssets/Soundtracks/Overworld01/forestOak_Basic.wav" id="2_basic"]
+[ext_resource type="AudioStream" uid="uid://c6n04nlu807eh" path="res://AudioAssets/Soundtracks/Overworld01/forestOak_Addition01.wav" id="3_add01"]
+[ext_resource type="AudioStream" uid="uid://w2wx302mlohx" path="res://AudioAssets/Soundtracks/Overworld01/forestOak_Addition02.wav" id="4_add02"]
+
+[node name="AudioManager" type="Node" unique_id=1257952953]
+script = ExtResource("1_scr")
+
+[node name="StemBasic" type="AudioStreamPlayer" parent="." unique_id=60399871]
+stream = ExtResource("2_basic")
+
+[node name="StemAdd01" type="AudioStreamPlayer" parent="." unique_id=396593786]
+stream = ExtResource("3_add01")
+volume_db = -80.0
+
+[node name="StemAdd02" type="AudioStreamPlayer" parent="." unique_id=1048361747]
+stream = ExtResource("4_add02")
+volume_db = -80.0
