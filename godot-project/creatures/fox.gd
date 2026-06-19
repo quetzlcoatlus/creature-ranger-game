@@ -1,4 +1,4 @@
-extends CaptureCreature
+extends Creature
 
 # Fox: fast, erratic zigzag bursts separated by short coasting periods.
 # speed export = burst speed; coast is 20% of that.

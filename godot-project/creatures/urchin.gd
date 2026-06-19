@@ -1,4 +1,4 @@
-extends CaptureCreature
+extends Creature
 
 # Urchin: very slow, stops periodically, wanders within a short radius.
 # Passive spike aura (DamageHitbox always on) punishes tight loops.
