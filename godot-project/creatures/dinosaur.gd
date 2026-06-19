@@ -1,4 +1,4 @@
-extends CaptureCreature
+extends Creature
 
 # Dinosaur: medium speed wander, periodically stops to bite in front of itself.
 # DamageHitbox enabled only during the bite window — teaches attack timing/avoidance.

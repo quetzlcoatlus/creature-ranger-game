@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var creature_layer: Node2D = $CaptureCreatureLayer
+@onready var creature_layer: Node2D = $CreatureLayer
 @onready var drawing_system: Node2D = $DrawingSystem
 @onready var hp_value: Label = $HUD/HPBar/HPValue
 @onready var loop_value: Label = $HUD/LoopCounter/LoopValue
@@ -9,7 +9,7 @@ extends Node2D
 const MAX_HP := 10
 var player_hp := MAX_HP
 var creatures_remaining := 0
-var _active_creature: CaptureCreature = null
+var _active_creature: Creature = null
 
 enum SceneResult { SUCCESS, FLED, DEAD }
 
@@ -24,7 +24,7 @@ func _ready() -> void:
 
 	var bounds := ($Background/BoundaryRect as ColorRect).get_global_rect()
 	for child in creature_layer.get_children():
-		var creature := child as CaptureCreature
+		var creature := child as Creature
 		if not creature:
 			continue
 		creatures_remaining += 1
@@ -44,7 +44,7 @@ func _ready() -> void:
 
 
 func _on_loop_completed(node: Node2D) -> void:
-	var creature := node as CaptureCreature
+	var creature := node as Creature
 	if not creature:
 		return
 	_active_creature = creature
@@ -59,7 +59,7 @@ func _on_line_broke() -> void:
 func _on_line_cleared() -> void:
 	_active_creature = null
 	for child in creature_layer.get_children():
-		var creature := child as CaptureCreature
+		var creature := child as Creature
 		if creature:
 			creature.reset_loops()
 	_update_loop_display()
